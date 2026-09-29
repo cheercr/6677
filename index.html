@@ -60,10 +60,27 @@ h2{text-align:center;font-size:1.8rem;margin:38px 0 18px;color:var(--gold);text-
 .notes li{margin:6px 0 6px 18px;color:#e6dcff}
 footer{text-align:center;padding:10px 16px 40px;color:var(--pur2)}
 @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important}}
+#cursor-canvas{position:fixed;inset:0;pointer-events:none;z-index:9997}
+#sigil{position:fixed;top:0;left:0;width:34px;height:34px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);opacity:0;transition:opacity .25s}
+#sigil svg{width:100%;height:100%;filter:drop-shadow(0 0 6px var(--gold)) drop-shadow(0 0 12px var(--pur))}
+#sigil .ring{animation:sigspin 2.6s linear infinite}
+#sigil .ring2{animation:sigspin 3.4s linear infinite reverse}
+@keyframes sigspin{to{transform:rotate(360deg)}}
+.rune{position:fixed;top:0;left:0;pointer-events:none;z-index:9996;font-family:'Kanit',sans-serif;will-change:transform,opacity;transform:translate(-50%,-50%)}
+@media (hover:none){#cursor-canvas,#sigil{display:none}}
+@media (prefers-reduced-motion:reduce){#cursor-canvas,#sigil{display:none}}
 </style>
 </head>
 <body>
 <div id="stars" aria-hidden="true"></div>
+<canvas id="cursor-canvas" aria-hidden="true"></canvas>
+<div id="sigil" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <polygon class="ring" points="50,4 96,50 50,96 4,50" fill="none" stroke="#ffd166" stroke-width="3"/>
+    <polygon class="ring2" points="50,22 78,50 50,78 22,50" fill="none" stroke="#c084fc" stroke-width="3"/>
+    <circle cx="50" cy="50" r="6" fill="#fff6d6"/>
+  </svg>
+</div>
 <div class="leds" id="leds" aria-hidden="true"></div>
 
 <header>
@@ -104,7 +121,7 @@ footer{text-align:center;padding:10px 16px 40px;color:var(--pur2)}
 
   <h2>ระยะเวลาทำคิว</h2>
   <div class="queue">
-    <div class="q" style="--dl:0s"><div class="x">คิวปกติ</div>1-2 วัน</div>
+    <div class="q" style="--dl:0s"><div class="x">1-2 วัน</div>คิวปกติ</div>
     <div class="q" style="--dl:.6s"><div class="x">×2</div>เสร็จใน 1 วัน<br>บวกเงินคูณ 2 ของราคางาน</div>
     <div class="q" style="--dl:1.2s"><div class="x">×3</div>เริ่มงานให้เลย<br>คูณ 3 ของราคางาน</div>
   </div>
@@ -133,6 +150,81 @@ const L = document.getElementById('leds'), cols = ['#8b3dff','#ffd166','#2c5cff'
 for (let i = 0; i < 24; i++) { const d = document.createElement('i'); d.style.setProperty('--c', cols[i % 5]); d.style.setProperty('--n', i); L.appendChild(d); }
 const S = document.getElementById('stars');
 for (let i = 0; i < 70; i++) { const s = document.createElement('div'); s.className = 'star' + (i % 2 ? ' p' : ''); const z = 2 + Math.random() * 3; s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;--d:${1.5+Math.random()*3}s;animation-delay:${Math.random()*3}s`; S.appendChild(s); }
+
+// ===== Arcane sigil cursor: energy ribbon + spinning rune trail =====
+(function(){
+  if (window.matchMedia('(hover:none)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.getElementById('cursor-canvas'), sigil = document.getElementById('sigil');
+  const ctx = canvas.getContext('2d');
+  function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  const glyphs = ['✦','✧','◈','⟡','✶','☆'];
+  let points = [];
+  let mx = innerWidth/2, my = innerHeight/2, sx = mx, sy = my, active = false, lastRune = 0;
+
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (!active) { active = true; sigil.style.opacity = 1; }
+    points.push({x:mx, y:my, t:performance.now()});
+    if (points.length > 26) points.shift();
+    const now = performance.now();
+    if (now - lastRune > 70) { lastRune = now; spawnRune(mx, my); }
+  }, {passive:true});
+  window.addEventListener('mouseleave', () => { active = false; sigil.style.opacity = 0; });
+
+  function spawnRune(x, y){
+    const el = document.createElement('div');
+    el.className = 'rune';
+    const isGold = Math.random() < 0.5;
+    const size = 11 + Math.random()*9;
+    el.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+    el.style.left = x+'px'; el.style.top = y+'px';
+    el.style.fontSize = size+'px';
+    el.style.color = isGold ? '#ffd166' : '#c084fc';
+    el.style.textShadow = `0 0 6px ${isGold?'#ffd166':'#8b3dff'}, 0 0 14px ${isGold?'#f5a524':'#8b3dff'}`;
+    document.body.appendChild(el);
+    const start = performance.now(), dur = 750 + Math.random()*300;
+    const spin = (Math.random()<0.5?-1:1) * (220 + Math.random()*260);
+    const drift = (Math.random()-0.5) * 30;
+    function frame(t){
+      const p = Math.min(1, (t-start)/dur);
+      const ease = p*p;
+      el.style.transform = `translate(-50%,-50%) translate(${drift*ease}px, ${-26*p - ease*10}px) rotate(${spin*p}deg) scale(${1 - p*0.5})`;
+      el.style.opacity = String(1 - p);
+      if (p < 1) requestAnimationFrame(frame); else el.remove();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function loop(){
+    sx += (mx-sx)*0.4; sy += (my-sy)*0.4;
+    sigil.style.left = sx+'px'; sigil.style.top = sy+'px';
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const now = performance.now();
+    points = points.filter(p => now - p.t < 420);
+    for (let i = 1; i < points.length; i++){
+      const a = points[i-1], b = points[i];
+      const age = (now - b.t) / 420;
+      const grad = ctx.createLinearGradient(a.x,a.y,b.x,b.y);
+      grad.addColorStop(0, 'rgba(255,209,102,'+(0.65*(1-age))+')');
+      grad.addColorStop(1, 'rgba(139,61,255,'+(0.65*(1-age))+')');
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = Math.max(0.5, 4.2*(1-age));
+      ctx.lineCap = 'round';
+      ctx.shadowBlur = 14;
+      ctx.shadowColor = '#8b3dff';
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
 </script>
 </body>
 </html>
