@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KAIZEN SHOP | ราคา & คิวงาน</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap">
+<style>
+:root{--bg:#07041a;--navy:#0b1a4a;--pur:#8b3dff;--pur2:#c084fc;--gold:#ffd166;--gold2:#f5a524;--ink:#efe9ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:'Kanit',system-ui,sans-serif;overflow-x:hidden;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:-30%;z-index:-2;background:conic-gradient(from 0deg,#07041a,#2a0f66,#0b1a4a,#3b0a5c,#07041a);animation:spin 40s linear infinite;filter:blur(60px);opacity:.75}
+@keyframes spin{to{transform:rotate(360deg)}}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:var(--gold);animation:tw var(--d) ease-in-out infinite;box-shadow:0 0 8px var(--gold)}
+.star.p{background:var(--pur2);box-shadow:0 0 8px var(--pur)}
+@keyframes tw{0%,100%{opacity:.1;transform:scale(.6)}50%{opacity:1;transform:scale(1.4)}}
+.leds{display:flex;justify-content:center;gap:10px;padding:12px;flex-wrap:wrap}
+.leds i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c),0 0 22px var(--c);animation:bl 1.2s infinite;animation-delay:calc(var(--n)*.12s)}
+@keyframes bl{0%,45%{opacity:1}50%,95%{opacity:.15}100%{opacity:1}}
+header{text-align:center;padding:28px 18px 40px;position:relative}
+.logo{width:150px;height:150px;margin:8px auto 18px;border-radius:50%;position:relative;display:grid;place-items:center;cursor:pointer;background:#0d0826;overflow:hidden;isolation:isolate}
+.logo::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:50%;background:conic-gradient(var(--gold),var(--pur),#2c5cff,var(--gold2),var(--pur),var(--gold));animation:spin 3s linear infinite}
+.logo::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#0d0826;z-index:-1}
+.logo img{width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;padding:4px}
+.logo span{font-size:.8rem;color:var(--pur2);text-align:center;padding:10px;animation:bl 2s infinite}
+.logo-wrap{filter:drop-shadow(0 0 22px var(--pur))}
+h1{font-size:clamp(2.2rem,8vw,4.6rem);font-weight:800;line-height:1.15;background:linear-gradient(90deg,var(--gold),#fff6d6,var(--pur2),#5b8cff,var(--gold));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite;filter:drop-shadow(0 0 18px rgba(139,61,255,.7))}
+@keyframes sh{to{background-position:300% 0}}
+.sub{margin-top:8px;color:var(--pur2);letter-spacing:.04em;animation:fl 4s infinite}
+@keyframes fl{0%,18%,22%,60%,100%{opacity:1;text-shadow:0 0 12px var(--pur)}20%,24%,62%{opacity:.35;text-shadow:none}}
+.btn{display:inline-block;margin-top:24px;padding:15px 34px;border-radius:999px;font-weight:600;font-size:1.1rem;color:#1a1000;text-decoration:none;background:linear-gradient(90deg,var(--gold),var(--gold2),#fff0b8,var(--gold));background-size:250% 100%;animation:sh 3s linear infinite,pulse 1.6s ease-in-out infinite;box-shadow:0 0 24px rgba(255,209,102,.6)}
+.btn:hover{transform:scale(1.07) rotate(-1deg)}
+.btn:focus-visible,.card:focus-visible{outline:3px solid var(--pur2);outline-offset:4px}
+.btn{transition:transform .2s}
+@keyframes pulse{50%{box-shadow:0 0 50px rgba(255,209,102,.95),0 0 90px rgba(139,61,255,.7)}}
+main{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+h2{text-align:center;font-size:1.8rem;margin:38px 0 18px;color:var(--gold);text-shadow:0 0 14px rgba(255,209,102,.5)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.card{position:relative;border-radius:20px;padding:22px 20px;background:linear-gradient(160deg,rgba(20,10,60,.92),rgba(7,4,26,.95));isolation:isolate;overflow:hidden;transition:transform .3s}
+.card::before{content:"";position:absolute;inset:-60%;z-index:-2;background:conic-gradient(from var(--a,0deg),transparent 0 60%,var(--pur) 75%,var(--gold) 88%,#2c5cff 95%,transparent);animation:spin 4.5s linear infinite}
+.card::after{content:"";position:absolute;inset:2px;border-radius:18px;background:linear-gradient(160deg,#150a3d,#07041a 70%);z-index:-1}
+.card:hover{transform:translateY(-8px) scale(1.02)}
+.card h3{font-size:1.25rem;color:#fff;display:flex;gap:8px;align-items:center}
+.card h3 b{font-size:1.7rem;animation:fl 5s infinite}
+.card ul{list-style:none;padding:0;margin:12px 0}
+.card li{padding:3px 0 3px 22px;position:relative;font-size:.95rem;color:#dcd2ff}
+.card li::before{content:"✦";position:absolute;left:0;color:var(--gold);animation:bl 2.4s infinite}
+.price{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(192,132,252,.4);font-size:.85rem;color:var(--pur2)}
+.price strong{display:block;font-size:1.5rem;background:linear-gradient(90deg,var(--gold),#fff,var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.big{grid-column:1/-1}
+.big ul{columns:2 220px}
+.queue{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.q{padding:20px;border-radius:18px;text-align:center;border:1px solid rgba(255,209,102,.4);background:rgba(11,26,74,.55);backdrop-filter:blur(6px);animation:glow 3s ease-in-out infinite;animation-delay:var(--dl)}
+@keyframes glow{50%{box-shadow:0 0 30px rgba(139,61,255,.7),inset 0 0 20px rgba(255,209,102,.15);border-color:var(--pur2)}}
+.q .x{font-size:2.6rem;font-weight:800;color:var(--gold)}
+.notes{margin-top:26px;padding:20px 22px;border-radius:18px;background:rgba(139,61,255,.12);border:1px solid rgba(139,61,255,.5)}
+.notes li{margin:6px 0 6px 18px;color:#e6dcff}
+footer{text-align:center;padding:10px 16px 40px;color:var(--pur2)}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="stars" aria-hidden="true"></div>
+<div class="leds" id="leds" aria-hidden="true"></div>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo" id="logo" role="button" tabindex="0" title="คลิกเพื่อใส่โลโก้">
+      <img id="logoImg" alt="โลโก้ร้าน">
+      <span id="logoHint">คลิกเพื่อ<br>ใส่โลโก้</span>
+    </div>
+  </div>
+  <input type="file" id="file" accept="image/*" hidden>
+  <h1>รับทำดิสคอร์ด</h1>
+  <p class="sub">ทำตามบรีฟลูกค้า • ห้อง ยศ ตกแต่ง บอท ครบจบ</p>
+  <a class="btn" id="joinBtn" href="#" target="_blank" rel="noopener">เข้าดิสร้านค้า</a>
+</header>
+
+<main>
+  <h2>แพ็กเกจและราคา</h2>
+  <div class="grid">
+    <article class="card" tabindex="0"><h3><b>🐰</b> ดิสพูดคุย / ส่วนตัว</h3>
+      <ul><li>ห้อง + ยศ + ตกแต่ง ประมาณ 20 ห้อง</li><li>บอทแจ้งเตือนเข้า - ออก</li><li>บอทรับยศกดปุ่ม</li><li>บอทเพลง</li></ul>
+      <div class="price">ราคาเริ่มต้น<strong>109 - 239 THB</strong></div></article>
+
+    <article class="card" tabindex="0"><h3><b>🌷</b> ดิสสตรีมเมอร์</h3>
+      <ul><li>ห้อง + ยศ + ตกแต่ง ประมาณ 30 ห้อง</li><li>บอทแจ้งเตือนเข้า - ออก</li><li>บอทรับยศกดอิโมจิ</li><li>บอทแจ้งเตือนสตรีม (YouTube / TikTok / Twitch เลือกได้ 1 อย่าง)</li><li>บอทเพลง</li></ul>
+      <div class="price">ราคาเริ่มต้น<strong>199 - 399 THB</strong></div></article>
+
+    <article class="card" tabindex="0"><h3><b>🐈</b> ดิสร้านค้า</h3>
+      <ul><li>ห้อง + ยศ + ตกแต่ง ประมาณ 20 ห้อง</li><li>บอทแจ้งเตือนเข้า - ออก</li><li>บอทรับยศกดอิโมจิ</li><li>บอท ticket</li><li>เพิ่มบอทคำสั่งลัดบัญชี +20 เท่านั้น</li></ul>
+      <div class="price">ราคาเริ่มต้น<strong>159 - 299 THB</strong></div></article>
+
+    <article class="card" tabindex="0"><h3><b>🍓</b> ดิสแก๊งค์ / แคลน / กิลด์ / ครอบครัว</h3>
+      <ul><li>ห้อง + ยศ + ตกแต่ง ประมาณ 30 ห้อง</li><li>บอทแจ้งเตือนเข้า - ออก</li><li>บอทรับยศกดอิโมจิ</li><li>บอทแสดงจำนวนคนในดิส</li><li>บอทเพลง</li></ul>
+      <div class="price">ราคาเริ่มต้น<strong>129 - 209 THB</strong></div></article>
+
+    <article class="card big" tabindex="0"><h3><b>🚌</b> ดิสคอมมูนิตี้ / ดิสประเทศ</h3>
+      <ul><li>ห้อง + ยศ + ตกแต่ง 100+ ห้อง</li><li>บอทแจ้งเตือนเข้า - ออก</li><li>ยอมรับยศพิมพ์คำ</li><li>บอทแสดงจำนวนคนในดิส</li><li>บอทเพลง</li><li>บอทดักสแปม</li><li>เช็คเวลาออนไลน์</li><li>คุยกับบอท</li><li>สร้างห้องอัตโนมัติ</li><li>สุ่มลงห้องเสียง</li><li>เช็คคำเชิญ</li><li>บอทดูดวง</li></ul>
+      <div class="price">ราคาเริ่มต้น<strong>699 - 1,500 THB</strong></div></article>
+  </div>
+
+  <h2>ระยะเวลาทำคิว</h2>
+  <div class="queue">
+    <div class="q" style="--dl:0s"><div class="x">คิวปกติ</div>1-2 วัน</div>
+    <div class="q" style="--dl:.6s"><div class="x">×2</div>เสร็จใน 1 วัน<br>บวกเงินคูณ 2 ของราคางาน</div>
+    <div class="q" style="--dl:1.2s"><div class="x">×3</div>เริ่มงานให้เลย<br>คูณ 3 ของราคางาน</div>
+  </div>
+
+  <div class="notes">
+    <ul>
+      <li>ลงคิวและนับเวลาทำหลังจากชำระเงิน</li>
+      <li>โอนมัดจำก่อนลงคิว</li>
+      <li>ราคาที่แจ้งด้านบนเป็นราคาเดียว ไม่บวกเพิ่ม! แต่หากลูกค้าอยากได้จำนวนห้องเพิ่ม หรืออยากเซ็ตบอทอื่นๆ จะบวกตามราคา</li>
+    </ul>
+  </div>
+  <div style="text-align:center"><a class="btn" id="joinBtn2" href="#" target="_blank" rel="noopener">เข้าดิสร้านค้า เพื่อสั่งงาน</a></div>
+</main>
+<footer>✦ ขอบคุณที่ไว้วางใจ ✦</footer>
+
+<script>
+// ===== ตั้งค่าตรงนี้ =====
+const DISCORD_URL = "https://discord.gg/Q589MD6d33";   // ใส่ลิงก์เชิญดิสร้านค้า เช่น https://discord.gg/xxxxx
+const LOGO_SRC = "https://postimg.cc/HrmXK2Z6";       // ใส่โลโก้เป็น data:image/... ได้ (หรือคลิกที่วงกลมเพื่ออัปโหลดชั่วคราว)
+// ==========================
+document.getElementById('joinBtn').href = DISCORD_URL;
+document.getElementById('joinBtn2').href = DISCORD_URL;
+const img = document.getElementById('logoImg'), hint = document.getElementById('logoHint'), fi = document.getElementById('file');
+function setLogo(s){ if(!s) return; img.src = s; img.style.display = 'block'; hint.style.display = 'none'; }
+setLogo(LOGO_SRC);
+const lg = document.getElementById('logo');
+lg.addEventListener('click', () => fi.click());
+lg.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fi.click(); });
+fi.addEventListener('change', () => { const f = fi.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => setLogo(r.result); r.readAsDataURL(f); });
+const L = document.getElementById('leds'), cols = ['#8b3dff','#ffd166','#2c5cff','#c084fc','#f5a524'];
+for (let i = 0; i < 24; i++) { const d = document.createElement('i'); d.style.setProperty('--c', cols[i % 5]); d.style.setProperty('--n', i); L.appendChild(d); }
+const S = document.getElementById('stars');
+for (let i = 0; i < 70; i++) { const s = document.createElement('div'); s.className = 'star' + (i % 2 ? ' p' : ''); const z = 2 + Math.random() * 3; s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;--d:${1.5+Math.random()*3}s;animation-delay:${Math.random()*3}s`; S.appendChild(s); }
+</script>
+</body>
+</html>
