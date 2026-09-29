@@ -21,7 +21,7 @@ body::before{content:"";position:fixed;inset:-30%;z-index:-2;background:conic-gr
 .leds i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c),0 0 22px var(--c);animation:bl 1.2s infinite;animation-delay:calc(var(--n)*.12s)}
 @keyframes bl{0%,45%{opacity:1}50%,95%{opacity:.15}100%{opacity:1}}
 header{text-align:center;padding:28px 18px 40px;position:relative}
-.logo{width:150px;height:150px;margin:8px auto 18px;border-radius:50%;position:relative;display:grid;place-items:center;cursor:pointer;background:#0d0826;overflow:hidden;isolation:isolate}
+.logo{width:150px;height:150px;margin:8px auto 18px;border-radius:50%;position:relative;display:grid;place-items:center;background:#0d0826;overflow:hidden;isolation:isolate}
 .logo::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:50%;background:conic-gradient(var(--gold),var(--pur),#2c5cff,var(--gold2),var(--pur),var(--gold));animation:spin 3s linear infinite}
 .logo::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#0d0826;z-index:-1}
 .logo img{width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;padding:4px}
@@ -73,9 +73,8 @@ footer{text-align:center;padding:10px 16px 40px;color:var(--pur2)}
       <span id="logoHint">KAIZEN<br>SHOP</span>
     </div>
   </div>
-  <input type="file" id="file" accept="image/*" hidden>
   <h1>KAIZEN SHOP</h1>
-  <p class="sub">รับทำดิสคอร์ด • ทำตามบรีฟลูกค้า </p>
+  <p class="sub">รับทำดิสคอร์ด • ทำตามบรีฟลูกค้า</p>
   <a class="btn" id="joinBtn" href="#" target="_blank" rel="noopener">เข้าดิสร้านค้า</a>
 </header>
 
@@ -105,7 +104,7 @@ footer{text-align:center;padding:10px 16px 40px;color:var(--pur2)}
 
   <h2>ระยะเวลาทำคิว</h2>
   <div class="queue">
-    <div class="q" style="--dl:0s"><div class="x">1-2 วัน</div>คิวปกติ</div>
+    <div class="q" style="--dl:0s"><div class="x">คิวปกติ</div>1-2 วัน</div>
     <div class="q" style="--dl:.6s"><div class="x">×2</div>เสร็จใน 1 วัน<br>บวกเงินคูณ 2 ของราคางาน</div>
     <div class="q" style="--dl:1.2s"><div class="x">×3</div>เริ่มงานให้เลย<br>คูณ 3 ของราคางาน</div>
   </div>
@@ -128,13 +127,8 @@ const LOGO_SRC = "data:image/webp;base64,UklGRlJbAABXRUJQVlA4WAoAAAAQAAAAjwEAjwE
 // ==========================
 document.getElementById('joinBtn').href = DISCORD_URL;
 document.getElementById('joinBtn2').href = DISCORD_URL;
-const img = document.getElementById('logoImg'), hint = document.getElementById('logoHint'), fi = document.getElementById('file');
-function setLogo(s){ if(!s) return; img.src = s; img.style.display = 'block'; hint.style.display = 'none'; }
-setLogo(LOGO_SRC);
-const lg = document.getElementById('logo');
-lg.addEventListener('click', () => fi.click());
-lg.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fi.click(); });
-fi.addEventListener('change', () => { const f = fi.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => setLogo(r.result); r.readAsDataURL(f); });
+const img = document.getElementById('logoImg'), hint = document.getElementById('logoHint');
+if (LOGO_SRC) { img.src = LOGO_SRC; img.style.display = 'block'; hint.style.display = 'none'; }
 const L = document.getElementById('leds'), cols = ['#8b3dff','#ffd166','#2c5cff','#c084fc','#f5a524'];
 for (let i = 0; i < 24; i++) { const d = document.createElement('i'); d.style.setProperty('--c', cols[i % 5]); d.style.setProperty('--n', i); L.appendChild(d); }
 const S = document.getElementById('stars');
